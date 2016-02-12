@@ -8,7 +8,7 @@ There's not much to it at the moment. This example program shows the aquisition 
 import com.stephenmac7.jcore.UnidicImporter
 
 object Main {
-    def main(args: Array[String) = {
+    def main(args: Array[String]) = {
         val sentence = UnidicImporter.toSentence("お寿司が食べたい。")
         println(sentence)
     }
