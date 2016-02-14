@@ -150,7 +150,6 @@ object Furigana {
   }
 
   def showFurigana(furigana: List[Reading]): String = {
-    System.out.println(furigana)
     def bracket(x: String) = "[" + x + "]"
     def term(reading: Reading) = reading match {
       case (kanji, reading) => if (reading.isEmpty) kanji else kanji + bracket(reading)
@@ -173,7 +172,6 @@ object Furigana {
   }
 
   def fromWord(word: Word): List[Reading] = {
-    System.out.println(word)
     lazy val hpro = toHiragana(word.literal_pronunciation)
     if (noReading(word.literal) || word.literal_pronunciation == "*")
       List((word.literal, "")) else {
