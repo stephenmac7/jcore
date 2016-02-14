@@ -110,7 +110,7 @@ object Furigana {
     surface.splitAt(surface.length - endL) match {
       case (kanji, okurigana) =>
         val furigana = reading.take(reading.length - endL)
-        val okReading = List((okurigana, ""))
+        val okReading = if (okurigana.isEmpty) List() else List((okurigana, ""))
         if (kanji.isEmpty) okReading else (kanji, furigana) :: okReading
     }
   }
@@ -150,6 +150,7 @@ object Furigana {
   }
 
   def showFurigana(furigana: List[Reading]): String = {
+    System.out.println(furigana)
     def bracket(x: String) = "[" + x + "]"
     def term(reading: Reading) = reading match {
       case (kanji, reading) => if (reading.isEmpty) kanji else kanji + bracket(reading)
@@ -172,11 +173,12 @@ object Furigana {
   }
 
   def fromWord(word: Word): List[Reading] = {
+    System.out.println(word)
     lazy val hpro = toHiragana(word.literal_pronunciation)
     if (noReading(word.literal) || word.literal_pronunciation == "*")
       List((word.literal, "")) else {
       lazy val noFrills = noFrillsToFurigana(word.literal, hpro)
-      dict.get(word.lemma, hpro) match {
+      dict.get((word.lemma, hpro)).orElse(dict.get((word.literal, hpro))) match {
         case Some(rrs) => {
           val jm = jmdToFurigana(word.literal, rrs)
           if (furiganaToReading(jm) == hpro) jm else noFrills
