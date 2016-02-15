@@ -39,6 +39,7 @@ class FuriganaTest extends Specification {
 
     "tricky" >> {
       furigana("同じ失敗を繰り返すな。") must_== "同[おな]じ 失[しっ]敗[ぱい]を 繰[く]り 返[かえ]すな。"
+      furigana("熱いうちに、どうぞ召し上がって下さい。") must_== "熱[あつ]いうちに、どうぞ 召[め]し 上[あ]がって 下[くだ]さい。"
     }
   }
 }

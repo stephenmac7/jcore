@@ -176,7 +176,7 @@ object Furigana {
     if (noReading(word.literal) || word.literal_pronunciation == "*")
       List((word.literal, "")) else {
       lazy val noFrills = noFrillsToFurigana(word.literal, hpro)
-      dict.get((word.lemma, hpro)).orElse(dict.get((word.literal, hpro))) match {
+      dict.get((word.lemma, toHiragana(word.lemma_pronunciation))).orElse(dict.get((word.literal, hpro))) match {
         case Some(rrs) => {
           val jm = jmdToFurigana(word.literal, rrs)
           if (furiganaToReading(jm) == hpro) jm else noFrills
