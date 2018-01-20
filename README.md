@@ -3,7 +3,7 @@
 Runs text through [Kuromoji](https://github.com/atilika/kuromoji), a Japanese morphlogical analyzer and cleans up the results. Also has support for furigana generation.
 
 ### Using jcore
-There's not much to it at the moment. This example program shows the aquisition of a sentence:
+There's not much to it at the moment. This example program shows how get a sentence:
 ```scala
 import com.stephenmac7.jcore.UnidicImporter
 
