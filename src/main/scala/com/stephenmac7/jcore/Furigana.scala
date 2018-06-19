@@ -16,8 +16,8 @@
 
 package com.stephenmac7.jcore
 
-import mariten.kanatools.KanaConverter
-import mariten.kanatools.KanaAppraiser
+import com.mariten.kanatools.KanaConverter
+import com.mariten.kanatools.KanaAppraiser
 
 import scala.io.Source
 
@@ -172,14 +172,16 @@ object Furigana {
   }
 
   def fromWord(word: Word): List[Reading] = {
-    lazy val hpro = toHiragana(word.literal_pronunciation)
+    lazy val literal = (word.literal, toHiragana(word.literal_pronunciation))
+    lazy val lemma = (word.lemma, toHiragana(word.lemma_pronunciation))
     if (noReading(word.literal) || word.literal_pronunciation == "*")
-      List((word.literal, "")) else {
-      lazy val noFrills = noFrillsToFurigana(word.literal, hpro)
-      dict.get((word.lemma, toHiragana(word.lemma_pronunciation))).orElse(dict.get((word.literal, hpro))) match {
+      List((word.literal, ""))
+    else {
+      lazy val noFrills = noFrillsToFurigana(word.literal, literal._2)
+      dict.get(literal).orElse(dict.get(lemma)) match {
         case Some(rrs) => {
           val jm = jmdToFurigana(word.literal, rrs)
-          if (furiganaToReading(jm) == hpro) jm else noFrills
+          if (furiganaToReading(jm) == literal._2) jm else noFrills
         }
         case None => noFrills
       }

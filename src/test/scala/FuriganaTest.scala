@@ -41,5 +41,9 @@ class FuriganaTest extends Specification {
       furigana("同じ失敗を繰り返すな。") must_== "同[おな]じ 失[しっ]敗[ぱい]を 繰[く]り 返[かえ]すな。"
       furigana("熱いうちに、どうぞ召し上がって下さい。") must_== "熱[あつ]いうちに、どうぞ 召[め]し 上[あ]がって 下[くだ]さい。"
     }
+
+    "single words" >> {
+      furigana("取引") must_== "取[とり]引[ひき]"
+    }
   }
 }
