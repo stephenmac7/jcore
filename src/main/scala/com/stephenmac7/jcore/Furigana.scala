@@ -70,7 +70,7 @@ object Furigana {
   // Dealing with the input file
   /** Reads a file to FuriganaDict */
   lazy val dict: FuriganaDict =
-    Source.fromInputStream(getClass.getResourceAsStream("/JmdictFurigana.txt")).getLines().map(readEntry).toMap
+    Source.fromInputStream(getClass.getResourceAsStream("/JmdictFurigana.txt"), "UTF-8").getLines().map(readEntry).toMap
 
   /** Reads a JmdictEntry */
   def readEntry(entryS: String): ((String, String), Array[RangedReading]) =
