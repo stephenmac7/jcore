@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.stephenmac7.jcore
+package com.stephenmac7.jcore.furigana
 
+import com.stephenmac7.jcore._
 import org.specs2.mutable.Specification
 
 class FuriganaTest extends Specification {
-  def furigana(text: String) = Furigana.fromSentence(UnidicImporter.toSentence(text))
+  def furigana(text: String) = fromSentence(UnidicImporter.toSentence(text))
 
   "Furigana Spec" >> {
     "general" >> {
