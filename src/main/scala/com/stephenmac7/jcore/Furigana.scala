@@ -62,7 +62,7 @@ object Furigana {
   }
 
   /** Checks whether a word has kanji */
-  def noReading(word: String): Boolean = {
+  def noKanji(word: String): Boolean = {
     def inRange(lower: Char, upper: Char)(c: Char): Boolean = c >= lower && c <= upper
     !word.exists(inRange('\u4E00', '\u9FFF')) // Checks for characters in CJK Unified Ideographs Unicode Block
   }
@@ -171,17 +171,26 @@ object Furigana {
     result.toString
   }
 
+  def fillProlongedSoundMark(withVowels: String, withoutVowels: String): String = {
+    withVowels.zip(withoutVowels).map{ case (x, y) => if (y == 'ー') x else y}.mkString;
+  }
+
   def fromWord(word: Word): List[Reading] = {
-    lazy val literal = (word.literal, toHiragana(word.literal_pronunciation))
-    lazy val lemma = (word.lemma, toHiragana(word.lemma_pronunciation))
-    if (noReading(word.literal) || word.literal_pronunciation == "*")
+    val pronunciation = toHiragana(fillProlongedSoundMark(word.lemma_reading, word.literal_pronunciation))
+    val literal = (word.literal, pronunciation)
+    val lemma = (word.lemma, toHiragana(word.lemma_reading))
+
+    if (noKanji(word.literal) || word.literal_pronunciation == "*")
       List((word.literal, ""))
     else {
-      lazy val noFrills = noFrillsToFurigana(word.literal, literal._2)
+      lazy val noFrills = noFrillsToFurigana(word.literal, pronunciation)
       dict.get(literal).orElse(dict.get(lemma)) match {
         case Some(rrs) => {
           val jm = jmdToFurigana(word.literal, rrs)
-          if (furiganaToReading(jm) == literal._2) jm else noFrills
+          if (furiganaToReading(jm) == pronunciation)
+            jm
+          else
+            noFrills
         }
         case None => noFrills
       }

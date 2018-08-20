@@ -30,6 +30,7 @@ class FuriganaTest extends Specification {
       furigana("火星は肉眼でも見える。") must_== "火[か]星[せい]は 肉[にく]眼[がん]でも 見[み]える。"
       furigana("彼の存在そのものが我々に災いをもたらすのだ") must_== "彼[かれ]の 存[そん]在[ざい]そのものが 我[われ]々[われ]に 災[わざわ]いをもたらすのだ"
       furigana("私達は南米を旅行した。") must_== "私[わたくし]達[たち]は 南[なん]米[べい]を 旅[りょ]行[こう]した。"
+      furigana("ええ、そうだよ") must_== "ええ、そうだよ"
     }
 
     "quotes" >> {
@@ -44,6 +45,8 @@ class FuriganaTest extends Specification {
 
     "single words" >> {
       furigana("取引") must_== "取[とり]引[ひき]"
+      furigana("大嘘") must_== "大[おお]嘘[うそ]"
+      furigana("王様") must_== "王[おう]様[さま]"
     }
   }
 }
