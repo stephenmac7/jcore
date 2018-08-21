@@ -24,6 +24,7 @@ class FuriganaTest extends Specification {
 
   "Furigana Spec" >> {
     "general" >> {
+      furigana("試験の採点が終わったようね。") must_== "試[し]験[けん]の 採[さい]点[てん]が 終[お]わったようね。"
       // にっぽん? にほん?
       furigana("日本はブラジルからコーヒーを輸入している。") must_== "日本[にっぽん]はブラジルからコーヒーを 輸[ゆ]入[にゅう]している。"
       furigana("活発にボランティア活動を行う。") must_== "活[かっ]発[ぱつ]にボランティア 活[かつ]動[どう]を 行[おこな]う。"
@@ -42,6 +43,10 @@ class FuriganaTest extends Specification {
     "tricky" >> {
       furigana("同じ失敗を繰り返すな。") must_== "同[おな]じ 失[しっ]敗[ぱい]を 繰[く]り 返[かえ]すな。"
       furigana("熱いうちに、どうぞ召し上がって下さい。") must_== "熱[あつ]いうちに、どうぞ 召[め]し 上[あ]がって 下[くだ]さい。"
+    }
+
+    "conjugation" >> {
+      furigana("聞いてみました") must_== "聞[き]いてみました"
     }
 
     "single words" >> {

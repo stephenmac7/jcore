@@ -11,7 +11,9 @@ package object furigana {
   }
 
   def fromWord(word: Word): List[Reading] = {
-    val pronunciation = toHiragana(fillProlongedSoundMark(word.lemma_reading, word.literal_pronunciation))
+    val pronunciation = toHiragana(VowelGuesser.fillProlongedSoundMark(
+      word.lemma_reading, word.literal_pronunciation
+    ))
     val literal = (word.literal, pronunciation)
     val lemma = (word.lemma, toHiragana(word.lemma_reading))
 
@@ -30,10 +32,6 @@ package object furigana {
         case None => noFrills
       }
     }
-  }
-
-  def fillProlongedSoundMark(withVowels: String, withoutVowels: String): String = {
-    withVowels.zip(withoutVowels).map{ case (x, y) => if (y == 'ー') x else y}.mkString;
   }
 
   def toHiragana(x: String): String = KanaConverter.convertKana(x, KanaConverter.OP_ZEN_KATA_TO_ZEN_HIRA)
